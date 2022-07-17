@@ -1,0 +1,61 @@
+# https://manual.seafile.com/docker/deploy_seafile_with_docker/
+# https://download.seafile.com/d/320e8adf90fa43ad8fee/files/?p=/docker/docker-compose.yml
+
+version: "2.1"
+
+volumes:
+  data: {}
+  mysql: {}
+  restic: {}
+
+services:
+  seafile:
+    build: seafile
+    ports:
+      - 80:80/tcp
+    volumes:
+      - data:/shared
+    environment:
+      DB_HOST: db
+      DB_ROOT_PASSWD: balena
+      SEAFILE_ADMIN_EMAIL: admin@example.com
+      SEAFILE_ADMIN_PASSWORD: asecret
+      SEAFILE_SERVER_LETSENCRYPT: "false"
+    depends_on:
+      - db
+      - memcached
+
+  db:
+    image: mariadb:10.5
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      MYSQL_LOG_CONSOLE: "true"
+      MYSQL_ROOT_PASSWORD: balena
+    # Repurpose the healthcheck cmd by having it export our database on a schedule.
+    # How to restore: <https://mariadb.com/kb/en/mysqldump/#restoring>
+    healthcheck:
+      test: mysqldump -uroot -p$MYSQL_ROOT_PASSWORD --opt --all-databases > /var/lib/mysql/dump.sql || exit 0
+      interval: 2h
+      timeout: 30s
+      retries: 3
+
+  memcached:
+    image: memcached:1.6
+    entrypoint: memcached -m 256
+
+  hostname:
+    build: hostname
+    restart: no
+    labels:
+      io.balena.features.supervisor-api: 1
+    environment:
+      SET_HOSTNAME: seafile
+
+  restic:
+    build: restic
+    privileged: true
+    labels:
+      io.balena.features.supervisor-api: 1
+    volumes:
+      - restic:/cache

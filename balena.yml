@@ -1,0 +1,21 @@
+name: "Seafile"
+type: "sw.application"
+description: "Seafile is an open source file sync & share solution designed for high reliability, performance and productivity."
+version: 9.0.6
+assets:
+  repository:
+    type: "blob.asset"
+    data:
+      url: "https://github.com/klutchell/balena-seafile"
+  logo:
+    type: "blob.asset"
+    data:
+      url: "https://raw.githubusercontent.com/klutchell/balena-seafile/main/logo.png"
+data:
+  defaultDeviceType: "intel-nuc"
+  supportedDeviceTypes:
+    - "raspberrypi3-64"
+    - "raspberrypi4-64"
+    - "intel-nuc"
+    - "genericx86-64-ext"
+    - "generic-aarch64"
