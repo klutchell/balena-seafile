@@ -13,6 +13,7 @@ services:
     build: seafile
     ports:
       - 80:80/tcp
+      - 8080:8080/tcp # optional webDAV port
     volumes:
       - data:/shared
     environment:
