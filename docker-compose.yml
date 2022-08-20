@@ -33,6 +33,7 @@ services:
     environment:
       MYSQL_LOG_CONSOLE: "true"
       MYSQL_ROOT_PASSWORD: balena
+      MARIADB_AUTO_UPGRADE: "1"
     # Repurpose the healthcheck cmd by having it export our database on a schedule.
     # How to restore: <https://mariadb.com/kb/en/mysqldump/#restoring>
     healthcheck:
