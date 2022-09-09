@@ -1,2 +1,2 @@
 # https://hub.docker.com/r/seafileltd/seafile-mc/tags
-FROM seafileltd/seafile-mc:9.0.7
+FROM seafileltd/seafile-mc:9.0.8
