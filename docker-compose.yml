@@ -27,7 +27,7 @@ services:
       - memcached
 
   db:
-    image: mariadb:10.8
+    image: mariadb:10.9
     volumes:
       - mysql:/var/lib/mysql
     environment:
