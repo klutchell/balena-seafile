@@ -1,7 +1,7 @@
 name: "Seafile"
 type: "sw.application"
 description: "Seafile is an open source file sync & share solution designed for high reliability, performance and productivity."
-version: 9.0.7
+version: 9.0.8
 assets:
   repository:
     type: "blob.asset"
